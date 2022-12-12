@@ -110,6 +110,18 @@ export default class Rect {
     return dst.#x > this.#x;
   }
 
+  isLeft(dst) {
+    return dst.x - this.x > 0;
+  }
+
+  isTop(dst) {
+    return dst.y - this.y > 0;
+  }
+
+  isBottom(dst) {
+    return dst.y - this.y < 0;
+  }
+
   linkToRect(dst) {
     let startPoint = new Point(this.x, this.y + 10)
     let endPoint = new Point(dst.x, dst.y + 10);

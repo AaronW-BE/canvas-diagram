@@ -1,0 +1,15 @@
+{
+  "name": "canvas-diagram",
+  "version": "1.0.0",
+  "description": "",
+  "source": "public/index.html",
+  "scripts": {
+    "start": "parcel",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.8.1"
+  }
+}

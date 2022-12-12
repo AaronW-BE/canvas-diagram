@@ -1,4 +1,5 @@
 import Point from "./point";
+import LinePath from "./linePath";
 
 export default class Rect {
   #width;
@@ -26,6 +27,7 @@ export default class Rect {
     // });
 
     this.mouseDown = false;
+    this.mousePoint = null;
     this.mouseDownPoint = null;
     document.addEventListener('mousedown', ev => {
       this.mouseDown = this.pointInArea(new Point(ev.x, ev.y));
@@ -37,6 +39,7 @@ export default class Rect {
     });
 
     document.addEventListener('mousemove', ev => {
+      this.mousePoint = new Point(ev.x, ev.y);
       if (this.pointInArea(new Point(ev.x, ev.y)) && this.mouseDown) {
         let availableListeners = this.#listeners.filter(item => item.event === 'drag');
         availableListeners.forEach(item => {
@@ -133,12 +136,12 @@ export default class Rect {
 
     this.ctx.beginPath()
     // start
-    this.ctx.moveTo(startPoint.x, startPoint.y);
-
-    this.ctx.lineTo(middleX, startPoint.y);
-    this.ctx.lineTo(middleX, endPoint.y);
-    this.ctx.lineTo(endPoint.x, endPoint.y);
-    this.ctx.stroke();
+    let linePath = new LinePath(this.ctx);
+    linePath.add(startPoint.x, startPoint.y);
+    linePath.add(middleX, startPoint.y);
+    linePath.add(middleX, endPoint.y);
+    linePath.add(endPoint.x, endPoint.y)
+    linePath.draw();
   }
 
   draw() {

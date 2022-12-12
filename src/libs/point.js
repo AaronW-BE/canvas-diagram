@@ -4,24 +4,22 @@ export default class Point {
   constructor(x, y) {
     this.#x = x;
     this.#y = y;
-    this._x = x;
-    this._y = y;
   }
 
 
   get x() {
-    return this._x;
+    return this.#x;
   }
 
   set x(value) {
-    this._x = value;
+    this.#x = value;
   }
 
   get y() {
-    return this._y;
+    return this.#y;
   }
 
   set y(value) {
-    this._y = value;
+    this.#y = value;
   }
 }

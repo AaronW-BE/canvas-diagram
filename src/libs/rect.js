@@ -27,19 +27,21 @@ export default class Rect {
     // });
 
     this.mouseDown = false;
-    this.mousePoint = null;
     this.mouseDownPoint = null;
+    this.mouseOffset = new Point(0, 0);
     document.addEventListener('mousedown', ev => {
       this.mouseDown = this.pointInArea(new Point(ev.x, ev.y));
       this.mouseDownPoint = new Point(ev.x, ev.y);
+      this.mouseOffset.x = this.x - ev.x;
+      this.mouseOffset.y = this.y - ev.y;
     });
     document.addEventListener('mouseup', ev => {
       console.info("mouse up")
       this.mouseDown = false
+      this.mouseOffset.x = this.mouseOffset.y = 0;
     });
 
     document.addEventListener('mousemove', ev => {
-      this.mousePoint = new Point(ev.x, ev.y);
       if (this.pointInArea(new Point(ev.x, ev.y)) && this.mouseDown) {
         let availableListeners = this.#listeners.filter(item => item.event === 'drag');
         availableListeners.forEach(item => {

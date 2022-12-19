@@ -12,11 +12,8 @@ reactA.onClick(function () {
 });
 
 reactA.onDrag(function (ev) {
-
-  this.x += ev.offsetX - this.mouseDownPoint.x;
-  this.y += ev.offsetY - this.mouseDownPoint.y;
-
-  this.mouseDownPoint = new Point(ev.offsetX, ev.offsetY);
+  this.x += ev.offsetX + this.mouseOffset.x;
+  this.y += ev.offsetY - this.mouseOffset.y;
 });
 let reactB = new Rect(ctx, 550, 350, 200, 140);
 reactB.onDrag(function (ev) {

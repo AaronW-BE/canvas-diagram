@@ -7,6 +7,7 @@ export default class Rect {
   #x;
   #y;
   #ctx;
+  #canMove = true;
 
   #listeners = [];
 
@@ -34,6 +35,14 @@ export default class Rect {
       this.mouseDownPoint = new Point(ev.x, ev.y);
       this.mouseOffset.x = this.x - ev.x;
       this.mouseOffset.y = this.y - ev.y;
+
+      if (this.mouseDown) {
+        let availableListeners = this.#listeners.filter(item => item.event === 'click');
+        availableListeners.forEach(item => {
+          item.processor.call(this, ev);
+        });
+      }
+
     });
     document.addEventListener('mouseup', ev => {
       console.info("mouse up")
@@ -43,15 +52,37 @@ export default class Rect {
 
     document.addEventListener('mousemove', ev => {
       if (this.pointInArea(new Point(ev.x, ev.y)) && this.mouseDown) {
-        let availableListeners = this.#listeners.filter(item => item.event === 'drag');
-        availableListeners.forEach(item => {
-          item.processor.call(this, ev);
-        });
+
+        // move element
+        if (this.#canMove) {
+          // this.x += ev.offsetX - this.mouseDownPoint.x;
+          // this.y += ev.offsetY - this.mouseDownPoint.y;
+          // this.mouseDownPoint = new Point(ev.offsetX, ev.offsetY);
+        }
+        return
+
+
+        // let availableListeners = this.#listeners.filter(item => item.event === 'drag');
+        // availableListeners.forEach(item => {
+        //   item.processor.call(this, ev);
+        // });
       }
     });
   }
 
+  /**
+   * move to a new position
+   * @param point
+   */
+  moveTo(point) {
+    this.x = point.x
+    this.y = point.y
+  }
+
   pointInArea(point) {
+    if (!point) {
+      return false;
+    }
     return point.x >= this.x && point.x <= this.x + this.width
       && point.y >= this.y && point.y <= this.y + this.height;
   }
